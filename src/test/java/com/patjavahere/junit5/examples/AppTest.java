@@ -48,7 +48,7 @@ public class AppTest {
 
     @Test
     public void testSupplierCaseWithAssertions() {
-        Supplier<String> messageSupplier = () -> "Calculator.add(2, 2) test failed";
+        Supplier<String> messageSupplier = () -> "App.sum(2, 2) test failed";
         Assertions.assertEquals(4, App.sum(3, 2), messageSupplier);
     }
 
