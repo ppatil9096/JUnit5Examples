@@ -11,6 +11,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.suite.api.ExcludeClassNamePatterns;
+import org.junit.platform.suite.api.IncludeClassNamePatterns;
+import org.junit.runner.RunWith;
 
 import java.util.function.Supplier;
 
@@ -22,6 +26,9 @@ import java.util.function.Supplier;
  * @author pravin
  * @Date 20 Feb, 2020
  */
+@RunWith(JUnitPlatform.class)
+//@IncludeClassNamePatterns({"^.*ATests?$"})
+//@ExcludeClassNamePatterns({"^.*ATests?$"})
 public class AppTest {
     @BeforeAll
     static void setup() {
@@ -70,6 +77,27 @@ public class AppTest {
     void testSumRepeated(RepetitionInfo repetitionInfo) {
         System.out.println("Running test -> " + repetitionInfo.getCurrentRepetition());
         Assertions.assertEquals(2, App.sum(1, 1), "1 + 1 should equal 2");
+    }
+
+    @Test
+    void testExpectedException() {
+        Assertions.assertThrows(NumberFormatException.class, () -> {
+            Integer.parseInt("One");
+        });
+    }
+
+    @Test
+    void testExpectedExceptionWithSuperType() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Integer.parseInt("One");
+        });
+    }
+
+    @Test
+    void testExpectedExceptionFail() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Integer.parseInt("1");
+        });
     }
 
     @AfterEach
